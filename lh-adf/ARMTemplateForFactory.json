@@ -149,6 +149,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
+						"folderPath": "output",
 						"container": "sink-adf"
 					},
 					"columnDelimiter": ",",
