@@ -20,6 +20,10 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
+							"wildcardFolderPath": {
+								"value": "@utcNow()",
+								"type": "Expression"
+							},
 							"wildcardFileName": "*txt",
 							"enablePartitionDiscovery": false
 						},
