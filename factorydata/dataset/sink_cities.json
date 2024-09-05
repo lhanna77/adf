@@ -9,6 +9,10 @@
 			"source_folder": {
 				"type": "string",
 				"defaultValue": "source"
+			},
+			"source_type_json": {
+				"type": "string",
+				"defaultValue": "json"
 			}
 		},
 		"annotations": [],
@@ -17,7 +21,7 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"folderPath": {
-					"value": "@concat(utcNow(), dataset().source_folder)\n\n\n\n",
+					"value": "@concat(utcNow(),'_', dataset().source_type_json)",
 					"type": "Expression"
 				},
 				"container": "sink-adf"
