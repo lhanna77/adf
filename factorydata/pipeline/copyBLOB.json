@@ -21,7 +21,7 @@
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
 							"wildcardFolderPath": "input",
-							"wildcardFileName": "*txt",
+							"wildcardFileName": "*json",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -37,7 +37,7 @@
 						"formatSettings": {
 							"type": "DelimitedTextWriteSettings",
 							"quoteAllText": true,
-							"fileExtension": ".txt"
+							"fileExtension": ""
 						}
 					},
 					"enableStaging": false,
