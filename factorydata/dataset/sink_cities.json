@@ -5,13 +5,19 @@
 			"referenceName": "AzureBlobStorageLS",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"source_folder": {
+				"type": "string",
+				"defaultValue": "source"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"folderPath": {
-					"value": "@utcNow()",
+					"value": "@concat(utcNow(), dataset().source_folder)\n\n\n\n",
 					"type": "Expression"
 				},
 				"container": "sink-adf"
