@@ -6,10 +6,6 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"source_folder": {
-				"type": "string",
-				"defaultValue": "source"
-			},
 			"source_type_json": {
 				"type": "string",
 				"defaultValue": "json"
