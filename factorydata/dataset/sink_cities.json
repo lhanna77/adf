@@ -1,5 +1,5 @@
 {
-	"name": "dest_cities",
+	"name": "sink_cities",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorageLS",

@@ -20,10 +20,6 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
-							"wildcardFolderPath": {
-								"value": "@utcNow()",
-								"type": "Expression"
-							},
 							"wildcardFileName": "*txt",
 							"enablePartitionDiscovery": false
 						},
@@ -34,7 +30,8 @@
 					"sink": {
 						"type": "DelimitedTextSink",
 						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
+							"type": "AzureBlobStorageWriteSettings",
+							"copyBehavior": "PreserveHierarchy"
 						},
 						"formatSettings": {
 							"type": "DelimitedTextWriteSettings",
@@ -60,7 +57,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "dest_cities",
+						"referenceName": "sink_cities",
 						"type": "DatasetReference"
 					}
 				]
