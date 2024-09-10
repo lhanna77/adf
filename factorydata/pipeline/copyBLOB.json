@@ -20,8 +20,8 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
-							"wildcardFolderPath": "input",
-							"enablePartitionDiscovery": false
+							"enablePartitionDiscovery": false,
+							"prefix": "input/"
 						},
 						"formatSettings": {
 							"type": "DelimitedTextReadSettings"
