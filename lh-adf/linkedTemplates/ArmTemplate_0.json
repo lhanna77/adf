@@ -43,10 +43,6 @@
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
-					"source_type_json": {
-						"type": "string",
-						"defaultValue": "json"
-					},
 					"output_folder": {
 						"type": "string",
 						"defaultValue": "output"
@@ -57,10 +53,6 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"folderPath": {
-							"value": "@concat(utcNow(),'_', dataset().output_folder)",
-							"type": "Expression"
-						},
 						"container": "sink-adf"
 					},
 					"columnDelimiter": ",",
@@ -88,7 +80,6 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"folderPath": "input",
 						"container": "source-adf"
 					},
 					"columnDelimiter": ",",
@@ -126,8 +117,8 @@
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
 									"recursive": true,
-									"enablePartitionDiscovery": false,
-									"prefix": "input/"
+									"wildcardFileName": "*",
+									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
 									"type": "DelimitedTextReadSettings"
