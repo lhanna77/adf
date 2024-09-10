@@ -6,10 +6,6 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"source_type_json": {
-				"type": "string",
-				"defaultValue": "json"
-			},
 			"output_folder": {
 				"type": "string",
 				"defaultValue": "output"
