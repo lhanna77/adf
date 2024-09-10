@@ -16,10 +16,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": {
-					"value": "@concat(utcNow(),'_', dataset().output_folder)",
-					"type": "Expression"
-				},
 				"container": "sink-adf"
 			},
 			"columnDelimiter": ",",
