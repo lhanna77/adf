@@ -166,10 +166,7 @@
 							{
 								"referenceName": "sink_cities",
 								"type": "DatasetReference",
-								"parameters": {
-									"source_type_json": "json",
-									"output_folder": "output"
-								}
+								"parameters": {}
 							}
 						]
 					}
