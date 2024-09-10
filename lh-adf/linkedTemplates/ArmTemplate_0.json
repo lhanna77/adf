@@ -10,6 +10,10 @@
 		"AzureBlobStorageLS_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageLS'"
+		},
+		"Storage Event Trigger Input_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/05174b2b-36c5-447e-a3b3-c8f02ccb85dc/resourceGroups/lh-adf-rg/providers/Microsoft.Storage/storageAccounts/lhadfsa"
 		}
 	},
 	"variables": {
@@ -30,7 +34,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/source_cities')]",
+			"name": "[concat(parameters('factoryName'), '/sink_cities')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -38,14 +42,26 @@
 					"referenceName": "AzureBlobStorageLS",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"source_type_json": {
+						"type": "string",
+						"defaultValue": "json"
+					},
+					"output_folder": {
+						"type": "string",
+						"defaultValue": "output"
+					}
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "cities.txt",
-						"folderPath": "input",
-						"container": "source-adf"
+						"folderPath": {
+							"value": "@concat(utcNow(),'_', dataset().output_folder)",
+							"type": "Expression"
+						},
+						"container": "sink-adf"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
@@ -59,7 +75,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dest_cities')]",
+			"name": "[concat(parameters('factoryName'), '/source_cities')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -72,8 +88,8 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"folderPath": "output",
-						"container": "sink-adf"
+						"folderPath": "input",
+						"container": "source-adf"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
@@ -110,6 +126,8 @@
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
 									"recursive": true,
+									"wildcardFolderPath": "input",
+									"wildcardFileName": "*json",
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
@@ -119,12 +137,13 @@
 							"sink": {
 								"type": "DelimitedTextSink",
 								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
+									"type": "AzureBlobStorageWriteSettings",
+									"copyBehavior": "PreserveHierarchy"
 								},
 								"formatSettings": {
 									"type": "DelimitedTextWriteSettings",
 									"quoteAllText": true,
-									"fileExtension": ".txt"
+									"fileExtension": ""
 								}
 							},
 							"enableStaging": false,
@@ -146,9 +165,12 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "dest_cities",
+								"referenceName": "sink_cities",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"source_type_json": "json",
+									"output_folder": "output"
+								}
 							}
 						]
 					}
@@ -160,7 +182,38 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/source_cities')]",
-				"[concat(variables('factoryId'), '/datasets/dest_cities')]"
+				"[concat(variables('factoryId'), '/datasets/sink_cities')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Storage Event Trigger Input')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "copyBLOB",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/source-adf/blobs/input/",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('Storage Event Trigger Input_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated",
+						"Microsoft.Storage.BlobDeleted"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/copyBLOB')]"
 			]
 		}
 	]

@@ -8,6 +8,9 @@
 		"AzureBlobStorageLS_connectionString": {
 			"value": ""
 		},
+		"Storage Event Trigger Input_properties_typeProperties_scope": {
+			"value": "/subscriptions/05174b2b-36c5-447e-a3b3-c8f02ccb85dc/resourceGroups/lh-adf-rg/providers/Microsoft.Storage/storageAccounts/lhadfsa"
+		},
 		"containerUri": {
 			"value": ""
 		},
