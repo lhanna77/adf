@@ -59,7 +59,11 @@
 				"outputs": [
 					{
 						"referenceName": "sink_cities",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"source_type_json": "json",
+							"output_folder": "output"
+						}
 					}
 				]
 			}
