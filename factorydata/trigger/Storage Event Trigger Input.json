@@ -1,0 +1,25 @@
+{
+	"name": "Storage Event Trigger Input",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "copyBLOB",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/source-adf/blobs/input/",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/05174b2b-36c5-447e-a3b3-c8f02ccb85dc/resourceGroups/lh-adf-rg/providers/Microsoft.Storage/storageAccounts/lhadfsa",
+			"events": [
+				"Microsoft.Storage.BlobCreated",
+				"Microsoft.Storage.BlobDeleted"
+			]
+		}
+	}
+}
