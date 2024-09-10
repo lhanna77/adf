@@ -117,8 +117,8 @@
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
 									"recursive": true,
-									"wildcardFileName": "*",
-									"enablePartitionDiscovery": false
+									"enablePartitionDiscovery": false,
+									"prefix": "input/"
 								},
 								"formatSettings": {
 									"type": "DelimitedTextReadSettings"
@@ -190,7 +190,7 @@
 				],
 				"type": "BlobEventsTrigger",
 				"typeProperties": {
-					"blobPathBeginsWith": "/source-adf/blobs/input/",
+					"blobPathBeginsWith": "/source-adf/blobs/",
 					"ignoreEmptyBlobs": true,
 					"scope": "[parameters('Storage Event Trigger Input_properties_typeProperties_scope')]",
 					"events": [
