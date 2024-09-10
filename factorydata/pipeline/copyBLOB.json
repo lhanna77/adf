@@ -20,8 +20,6 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
-							"wildcardFolderPath": "input",
-							"wildcardFileName": "*json",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -59,11 +57,7 @@
 				"outputs": [
 					{
 						"referenceName": "sink_cities",
-						"type": "DatasetReference",
-						"parameters": {
-							"source_type_json": "json",
-							"output_folder": "output"
-						}
+						"type": "DatasetReference"
 					}
 				]
 			}
