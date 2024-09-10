@@ -53,6 +53,10 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
+						"folderPath": {
+							"value": "@dataset().output_folder",
+							"type": "Expression"
+						},
 						"container": "sink-adf"
 					},
 					"columnDelimiter": ",",
@@ -100,7 +104,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "cpBLOB",
+						"name": "Copy data1",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -117,8 +121,9 @@
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
 									"recursive": true,
-									"enablePartitionDiscovery": false,
-									"prefix": "input/"
+									"wildcardFolderPath": "input",
+									"wildcardFileName": "*",
+									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
 									"type": "DelimitedTextReadSettings"
@@ -133,7 +138,7 @@
 								"formatSettings": {
 									"type": "DelimitedTextWriteSettings",
 									"quoteAllText": true,
-									"fileExtension": ""
+									"fileExtension": ".txt"
 								}
 							},
 							"enableStaging": false,
@@ -157,7 +162,9 @@
 							{
 								"referenceName": "sink_cities",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"output_folder": "output"
+								}
 							}
 						]
 					}
@@ -190,7 +197,7 @@
 				],
 				"type": "BlobEventsTrigger",
 				"typeProperties": {
-					"blobPathBeginsWith": "/source-adf/blobs/",
+					"blobPathBeginsWith": "/source-adf/blobs/input/",
 					"ignoreEmptyBlobs": true,
 					"scope": "[parameters('Storage Event Trigger Input_properties_typeProperties_scope')]",
 					"events": [
