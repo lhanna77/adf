@@ -59,10 +59,7 @@
 				"outputs": [
 					{
 						"referenceName": "sink_cities",
-						"type": "DatasetReference",
-						"parameters": {
-							"output_folder": "output"
-						}
+						"type": "DatasetReference"
 					}
 				]
 			}
