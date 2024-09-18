@@ -21,7 +21,10 @@
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
 							"wildcardFolderPath": "input",
-							"wildcardFileName": "*.py",
+							"wildcardFileName": {
+								"value": "@concat('*',pipeline().parameters.test)",
+								"type": "Expression"
+							},
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -66,7 +69,8 @@
 		],
 		"parameters": {
 			"test": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": ".py"
 			}
 		},
 		"annotations": []
