@@ -61,7 +61,7 @@
 				"typeProperties": {
 					"variableName": "area",
 					"value": {
-						"value": "@mul(pipeline().parameters.length, pipeline().parameters.breadth)",
+						"value": "@mul(variables('length'), variables('breadth'))",
 						"type": "Expression"
 					}
 				}
