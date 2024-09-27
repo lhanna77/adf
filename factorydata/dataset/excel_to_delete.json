@@ -1,5 +1,5 @@
 {
-	"name": "ExcelToDelete",
+	"name": "excel_to_delete",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorageLS",
