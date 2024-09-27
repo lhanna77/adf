@@ -1,0 +1,22 @@
+{
+	"name": "ExcelToDelete",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorageLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Worksheet",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "spotify-2023.xlsx",
+				"folderPath": "output",
+				"container": "sink-adf"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	}
+}
