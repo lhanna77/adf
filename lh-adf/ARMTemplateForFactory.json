@@ -45,7 +45,10 @@
 									"type": "AzureBlobStorageReadSettings",
 									"recursive": true,
 									"wildcardFolderPath": "input",
-									"wildcardFileName": "*",
+									"wildcardFileName": {
+										"value": "@concat('*',pipeline().parameters.test)",
+										"type": "Expression"
+									},
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
@@ -94,6 +97,12 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"test": {
+						"type": "string",
+						"defaultValue": ".py"
+					}
 				},
 				"annotations": []
 			},
@@ -197,7 +206,7 @@
 				],
 				"type": "BlobEventsTrigger",
 				"typeProperties": {
-					"blobPathBeginsWith": "/source-adf/blobs/input/",
+					"blobPathBeginsWith": "/source-adf/blobs/input/trigger/",
 					"ignoreEmptyBlobs": true,
 					"scope": "[parameters('Storage Event Trigger Input_properties_typeProperties_scope')]",
 					"events": [
