@@ -6,7 +6,7 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "copyBLOB",
+					"referenceName": "copy_source_input",
 					"type": "PipelineReference"
 				}
 			}

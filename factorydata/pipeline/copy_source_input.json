@@ -1,9 +1,9 @@
 {
-	"name": "copyBLOB",
+	"name": "copy_source_input",
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "Copy Source Input",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
