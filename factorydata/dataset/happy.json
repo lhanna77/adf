@@ -1,0 +1,41 @@
+{
+	"name": "happy",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorageLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "happiness.csv",
+				"folderPath": "input",
+				"container": "source-adf"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Countries",
+				"type": "String"
+			},
+			{
+				"name": "Happiness index, 2022",
+				"type": "String"
+			},
+			{
+				"name": "Global rank",
+				"type": "String"
+			},
+			{
+				"name": "Available data",
+				"type": "String"
+			}
+		]
+	}
+}
