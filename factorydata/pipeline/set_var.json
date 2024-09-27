@@ -1,0 +1,97 @@
+{
+	"name": "set_var",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set Length",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "length",
+					"value": {
+						"value": "@pipeline().parameters.length",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Set Breadth",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "breadth",
+					"value": {
+						"value": "@pipeline().parameters.breadth",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Set Area",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Set Length",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Set Breadth",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "area",
+					"value": {
+						"value": "@mul(pipeline().parameters.length, pipeline().parameters.breadth)",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"length": {
+				"type": "int"
+			},
+			"breadth": {
+				"type": "int"
+			}
+		},
+		"variables": {
+			"length": {
+				"type": "Integer",
+				"defaultValue": 1
+			},
+			"breadth": {
+				"type": "Integer",
+				"defaultValue": 1
+			},
+			"area": {
+				"type": "Integer",
+				"defaultValue": 1
+			}
+		},
+		"folder": {
+			"name": "Control Flow Activities"
+		},
+		"annotations": []
+	}
+}
