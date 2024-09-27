@@ -22,7 +22,7 @@
 							"recursive": true,
 							"wildcardFolderPath": "input",
 							"wildcardFileName": {
-								"value": "@concat('*',pipeline().parameters.test)",
+								"value": "@concat('*',pipeline().parameters.ext_test)",
 								"type": "Expression"
 							},
 							"enablePartitionDiscovery": false
@@ -71,7 +71,7 @@
 			}
 		],
 		"parameters": {
-			"test": {
+			"ext_test": {
 				"type": "string",
 				"defaultValue": ".py"
 			}
