@@ -1,0 +1,35 @@
+{
+	"name": "append_array_var",
+	"properties": {
+		"activities": [
+			{
+				"name": "Append variable1",
+				"type": "AppendVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "golf scores",
+					"value": "84"
+				}
+			}
+		],
+		"variables": {
+			"golf scores": {
+				"type": "Array",
+				"defaultValue": [
+					86,
+					85,
+					88,
+					72
+				]
+			},
+			"output": {
+				"type": "Array"
+			}
+		},
+		"folder": {
+			"name": "Control Flow Activities"
+		},
+		"annotations": []
+	}
+}
