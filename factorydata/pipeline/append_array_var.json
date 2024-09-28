@@ -9,7 +9,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "golf scores",
-					"value": "84"
+					"value": {
+						"value": "int(84)",
+						"type": "Expression"
+					}
 				}
 			},
 			{
