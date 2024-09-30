@@ -1,0 +1,31 @@
+{
+	"name": "execute_activity",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute Pipeline1",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "set_var",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"length": 10,
+						"breadth": 10
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "Control Flow Activities"
+		},
+		"annotations": []
+	}
+}
