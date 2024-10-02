@@ -1,0 +1,19 @@
+{
+	"name": "sink_look_json",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorageLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "loop_out",
+				"container": "sink-adf"
+			}
+		},
+		"schema": {}
+	}
+}
