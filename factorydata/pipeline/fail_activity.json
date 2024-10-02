@@ -1,0 +1,21 @@
+{
+	"name": "fail_activity",
+	"properties": {
+		"activities": [
+			{
+				"name": "Fail1",
+				"type": "Fail",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"message": "Error",
+					"errorCode": "1001"
+				}
+			}
+		],
+		"folder": {
+			"name": "Control Flow Activities"
+		},
+		"annotations": []
+	}
+}
