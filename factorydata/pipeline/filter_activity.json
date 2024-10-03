@@ -1,0 +1,37 @@
+{
+	"name": "filter_activity",
+	"properties": {
+		"activities": [
+			{
+				"name": "Filter1",
+				"type": "Filter",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('files')",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@endswith(item(),'.py')",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"files": {
+				"type": "Array",
+				"defaultValue": [
+					"sample1.json",
+					"sample2.json",
+					"main.py"
+				]
+			}
+		},
+		"folder": {
+			"name": "Control Flow Activities"
+		},
+		"annotations": []
+	}
+}
