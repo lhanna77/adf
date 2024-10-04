@@ -1,0 +1,31 @@
+{
+	"name": "return_var",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": []
+			}
+		],
+		"variables": {
+			"user_name": {
+				"type": "String",
+				"defaultValue": "lhanna12"
+			},
+			"course": {
+				"type": "String",
+				"defaultValue": "udemy - azure - adf"
+			}
+		},
+		"folder": {
+			"name": "Control Flow Activities"
+		},
+		"annotations": []
+	}
+}
