@@ -54,7 +54,7 @@
 		"parameters": {
 			"user_select": {
 				"type": "bool",
-				"defaultValue": "0"
+				"defaultValue": false
 			}
 		},
 		"folder": {

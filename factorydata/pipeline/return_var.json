@@ -10,19 +10,29 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "pipelineReturnValue",
+					"value": [
+						{
+							"key": "user_name",
+							"value": {
+								"type": "String",
+								"content": "lhanna12"
+							}
+						},
+						{
+							"key": "course",
+							"value": {
+								"type": "String",
+								"content": "udemy - azure - adf"
+							}
+						}
+					],
+					"setSystemVariable": true
+				}
 			}
 		],
-		"variables": {
-			"user_name": {
-				"type": "String",
-				"defaultValue": "lhanna12"
-			},
-			"course": {
-				"type": "String",
-				"defaultValue": "udemy - azure - adf"
-			}
-		},
 		"folder": {
 			"name": "Control Flow Activities"
 		},
