@@ -9,7 +9,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@bool(true)",
+						"value": "@bool(pipeline().parameters.user_select)",
 						"type": "Expression"
 					},
 					"ifFalseActivities": [
@@ -41,7 +41,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"pipeline": {
-									"referenceName": "get_metadata",
+									"referenceName": "return_var",
 									"type": "PipelineReference"
 								},
 								"waitOnCompletion": true
@@ -51,6 +51,12 @@
 				}
 			}
 		],
+		"parameters": {
+			"user_select": {
+				"type": "bool",
+				"defaultValue": "0"
+			}
+		},
 		"folder": {
 			"name": "Control Flow Activities"
 		},
