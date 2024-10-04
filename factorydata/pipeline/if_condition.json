@@ -49,12 +49,68 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "If Condition1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "user_name",
+					"value": {
+						"value": "@activity('Execute Pipeline1').output.pipelineReturnValue.user_name",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Set variable2",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "If Condition1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "course",
+					"value": {
+						"value": "@activity('Execute Pipeline1').output.pipelineReturnValue.course",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
 			"user_select": {
 				"type": "bool",
 				"defaultValue": false
+			}
+		},
+		"variables": {
+			"user_name": {
+				"type": "String"
+			},
+			"course": {
+				"type": "String"
 			}
 		},
 		"folder": {
