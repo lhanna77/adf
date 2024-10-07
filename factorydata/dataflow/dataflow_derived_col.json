@@ -1,0 +1,42 @@
+{
+	"name": "dataflow_derived_col",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "source_sales_data",
+						"type": "DatasetReference"
+					},
+					"name": "sales"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          id as string,",
+				"          SalePersonFName as string,",
+				"          SalePersonLName as string,",
+				"          ProductName as string,",
+				"          ItemsSold as string,",
+				"          SoldPrice as string,",
+				"          SoldDate as string,",
+				"          City as string,",
+				"          State as string,",
+				"          Country as string,",
+				"          Region as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> sales",
+				"sales derive(SalePersonFName = iifNull(SalePersonFName, \"unknown\")) ~> derivedColumn1"
+			]
+		}
+	}
+}
