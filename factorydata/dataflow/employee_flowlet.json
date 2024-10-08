@@ -1,0 +1,43 @@
+{
+	"name": "employee_flowlet",
+	"properties": {
+		"type": "Flowlet",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "upperName"
+				},
+				{
+					"name": "selectCols"
+				},
+				{
+					"name": "employee"
+				},
+				{
+					"name": "output1"
+				}
+			],
+			"scriptLines": [
+				"input(output(",
+				"          empID as string,",
+				"          name as string,",
+				"          country as string,",
+				"          deptID as string",
+				"     ),",
+				"     order: 0,",
+				"     allowSchemaDrift: true) ~> employee",
+				"employee derive(name = upper(name)) ~> upperName",
+				"upperName select(mapColumn(",
+				"          empID,",
+				"          name,",
+				"          deptID",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectCols",
+				"selectCols output() ~> output1"
+			]
+		}
+	}
+}

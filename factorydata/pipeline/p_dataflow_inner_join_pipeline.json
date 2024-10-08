@@ -1,5 +1,5 @@
 {
-	"name": "dataflow_inner_join_pipeline",
+	"name": "p_dataflow_inner_join_pipeline",
 	"properties": {
 		"activities": [
 			{
