@@ -15,6 +15,9 @@
 			"sinks": [],
 			"transformations": [
 				{
+					"name": "ifNull"
+				},
+				{
 					"name": "derivedColumn1"
 				}
 			],
@@ -35,7 +38,8 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> sales",
-				"sales derive(SalePersonFName = iifNull(SalePersonFName, \"unknown\")) ~> derivedColumn1"
+				"sales derive(SalePersonFName = iifNull(SalePersonFName, \"unknown\")) ~> ifNull",
+				"ifNull derive(F = ERROR_FUNCTION('')) ~> derivedColumn1"
 			]
 		}
 	}
