@@ -22,7 +22,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "sink_output",
+						"referenceName": "sink_output_csv",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"

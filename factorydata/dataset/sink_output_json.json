@@ -1,5 +1,5 @@
 {
-	"name": "sink_output_csv",
+	"name": "sink_output_json",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorageLS",
@@ -9,18 +9,15 @@
 			"name": "dataflow"
 		},
 		"annotations": [],
-		"type": "DelimitedText",
+		"type": "Json",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "final_sales.json",
 				"folderPath": "output",
 				"container": "dataflow"
-			},
-			"columnDelimiter": ",",
-			"escapeChar": "\\",
-			"firstRowAsHeader": true,
-			"quoteChar": "\""
+			}
 		},
-		"schema": []
+		"schema": {}
 	}
 }

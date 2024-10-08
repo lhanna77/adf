@@ -12,13 +12,27 @@
 					"name": "sales"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "sink_look_json",
+						"type": "DatasetReference"
+					},
+					"name": "sinkOutputJSON"
+				}
+			],
 			"transformations": [
 				{
 					"name": "ifNull"
 				},
 				{
-					"name": "derivedColumn1"
+					"name": "concat"
+				},
+				{
+					"name": "subCols"
+				},
+				{
+					"name": "selectCols"
 				}
 			],
 			"scriptLines": [
@@ -39,7 +53,21 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> sales",
 				"sales derive(SalePersonFName = iifNull(SalePersonFName, \"unknown\")) ~> ifNull",
-				"ifNull derive(F = ERROR_FUNCTION('')) ~> derivedColumn1"
+				"ifNull derive(FullName = concatWS(\" \",SalePersonFName,SalePersonLName)) ~> concat",
+				"concat derive(Hdata = @(city1=City,",
+				"          region=Region)) ~> subCols",
+				"subCols select(mapColumn(",
+				"          id,",
+				"          SalePersonFName,",
+				"          SalePersonLName,",
+				"          ProductName",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectCols",
+				"selectCols sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sinkOutputJSON"
 			]
 		}
 	}
