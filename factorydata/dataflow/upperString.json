@@ -1,0 +1,14 @@
+{
+	"name": "upperString",
+	"properties": {
+		"type": "UDFLibrary",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"func_upperString(string) as string = upper(i1)"
+			]
+		}
+	}
+}
