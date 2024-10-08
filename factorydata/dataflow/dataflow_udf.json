@@ -12,8 +12,26 @@
 					"name": "employee"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "sink_output_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedFunc"
+				}
+			],
+			"udfLibraries": [
+				{
+					"referenceName": "func_upperString",
+					"type": "DataFlowReference"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          empID as string,",
@@ -23,7 +41,12 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> employee"
+				"     ignoreNoFilesFound: false) ~> employee",
+				"employee derive(name = upperString(name)) ~> derivedFunc",
+				"derivedFunc sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}
