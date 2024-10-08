@@ -1,5 +1,5 @@
 {
-	"name": "dataflow_flowlet",
+	"name": "dataflow_flowlet_template",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {

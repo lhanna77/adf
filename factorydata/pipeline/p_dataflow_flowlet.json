@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow_flowlet",
+						"referenceName": "dataflow_flowlet_template",
 						"type": "DataFlowReference"
 					},
 					"compute": {
