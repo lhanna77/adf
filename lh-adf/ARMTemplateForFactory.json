@@ -2381,6 +2381,95 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/p_dataflow_power_query')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Power Query1",
+						"type": "ExecuteWranglingDataflow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "powerquery_sales",
+								"type": "DataFlowReference",
+								"datasetParameters": {
+									"source_sales_data": {},
+									"UserQuerysinkoutputcsv": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"queries": [
+								{
+									"queryName": "UserQuery",
+									"dataflowSinks": [
+										{
+											"name": "UserQuerysinkoutputcsv",
+											"dataset": {
+												"referenceName": "sink_output_csv",
+												"type": "DatasetReference",
+												"parameters": {}
+											},
+											"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['power_query.csv'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tpartitionBy('hash', 1)) ~> UserQuerysinkoutputcsv"
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Dataflow"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/powerquery_sales')]",
+				"[concat(variables('factoryId'), '/datasets/sink_output_csv')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/powerquery_sales')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "WranglingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"name": "source_sales_data",
+							"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  source_sales_data",
+							"dataset": {
+								"referenceName": "source_sales_data",
+								"type": "DatasetReference"
+							}
+						}
+					],
+					"script": "section Section1;\r\nshared source_sales_data = let AdfDoc = AzureStorage.BlobContents(\"https://lhadfsa.blob.core.windows.net/dataflow/input/sales_data.csv\"),Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]), PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true]) in  PromotedHeaders;\r\nshared UserQuery = let Source = #\"source_sales_data\",\r\n  #\"Replaced value\" = Table.ReplaceValue(Source, \"\", \"Unknown\", Replacer.ReplaceValue, {\"SalePersonFName\"}),\r\n  #\"Filtered rows\" = Table.SelectRows(#\"Replaced value\", each ([SalePersonFName] <> \"Unknown\")) in #\"Filtered rows\";\r\n",
+					"documentLocale": "en-us"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/source_sales_data')]"
+			]
 		}
 	]
 }

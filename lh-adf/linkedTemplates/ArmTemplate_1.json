@@ -1108,6 +1108,31 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/powerquery_sales')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "WranglingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"name": "source_sales_data",
+							"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  source_sales_data",
+							"dataset": {
+								"referenceName": "source_sales_data",
+								"type": "DatasetReference"
+							}
+						}
+					],
+					"script": "section Section1;\r\nshared source_sales_data = let AdfDoc = AzureStorage.BlobContents(\"https://lhadfsa.blob.core.windows.net/dataflow/input/sales_data.csv\"),Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]), PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true]) in  PromotedHeaders;\r\nshared UserQuery = let Source = #\"source_sales_data\",\r\n  #\"Replaced value\" = Table.ReplaceValue(Source, \"\", \"Unknown\", Replacer.ReplaceValue, {\"SalePersonFName\"}),\r\n  #\"Filtered rows\" = Table.SelectRows(#\"Replaced value\", each ([SalePersonFName] <> \"Unknown\")) in #\"Filtered rows\";\r\n",
+					"documentLocale": "en-us"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/source_sales_data')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Storage Event Trigger Input')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -1238,56 +1263,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/copy_happy')]",
 				"[concat(variables('factoryId'), '/pipelines/get_metadata')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/p_dataflow_inner_join_pipeline')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Data flow1",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "dataflow_inner_join",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"employee": {},
-									"department": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"folder": {
-					"name": "Dataflow"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/dataflow_inner_join')]"
 			]
 		}
 	]
