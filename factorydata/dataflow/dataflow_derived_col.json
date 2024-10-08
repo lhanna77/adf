@@ -60,14 +60,17 @@
 				"          id,",
 				"          SalePersonFName,",
 				"          SalePersonLName,",
-				"          ProductName",
+				"          ProductName,",
+				"          Hdata",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectCols",
 				"selectCols sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     partitionFileNames:['final_sales.json'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sinkOutputJSON"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sinkOutputJSON"
 			]
 		}
 	}

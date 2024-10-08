@@ -13,7 +13,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "final_sales.json",
 				"folderPath": "output",
 				"container": "dataflow"
 			}
