@@ -1,0 +1,57 @@
+{
+	"name": "dataflow_column_pattern",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "source_sales_data",
+						"type": "DatasetReference"
+					},
+					"name": "sales"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "sink_output_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "colPattern"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          id as string,",
+				"          SalePersonFName as string,",
+				"          SalePersonLName as string,",
+				"          ProductName as string,",
+				"          ItemsSold as string,",
+				"          SoldPrice as string,",
+				"          SoldDate as string,",
+				"          City as string,",
+				"          State as string,",
+				"          Country as string,",
+				"          Region as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     inferDriftedColumnTypes: true,",
+				"     ignoreNoFilesFound: false) ~> sales",
+				"sales derive(each(match(type == 'string'), concat($$, '_clean') = trim($$, '.'))) ~> colPattern",
+				"colPattern sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['column_pattern.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
+			]
+		}
+	}
+}
