@@ -1,0 +1,23 @@
+{
+	"name": "sink_output_parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorageLS",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "dataflow"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "output",
+				"container": "dataflow"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
