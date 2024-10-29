@@ -62,9 +62,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"Storage Event Trigger Input_properties_typeProperties_scope": {
-						"value": "[parameters('Storage Event Trigger Input_properties_typeProperties_scope')]"
 					}
 				}
 			},
@@ -85,6 +82,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"Storage Event Trigger Input_properties_typeProperties_scope": {
+						"value": "[parameters('Storage Event Trigger Input_properties_typeProperties_scope')]"
 					}
 				}
 			},

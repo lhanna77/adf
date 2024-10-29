@@ -6,10 +6,6 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "lh-adf"
-		},
-		"Storage Event Trigger Input_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/05174b2b-36c5-447e-a3b3-c8f02ccb85dc/resourceGroups/lh-adf-rg/providers/Microsoft.Storage/storageAccounts/lhadfsa"
 		}
 	},
 	"variables": {
@@ -56,7 +52,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/sink_output_csv')]",
+			"name": "[concat(parameters('factoryName'), '/source_employee')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -72,7 +68,8 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"folderPath": "output",
+						"fileName": "employee.csv",
+						"folderPath": "input",
 						"container": "dataflow"
 					},
 					"columnDelimiter": ",",
@@ -80,7 +77,68 @@
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
-				"schema": []
+				"schema": [
+					{
+						"name": "empID",
+						"type": "String"
+					},
+					{
+						"name": "name",
+						"type": "String"
+					},
+					{
+						"name": "country",
+						"type": "String"
+					},
+					{
+						"name": "deptID",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/source_loop_json')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorageLS",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"fname": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().fname",
+							"type": "Expression"
+						},
+						"folderPath": "input",
+						"container": "source-adf"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"name": {
+							"type": "string"
+						},
+						"age": {
+							"type": "integer"
+						},
+						"city": {
+							"type": "string"
+						}
+					}
+				}
 			},
 			"dependsOn": []
 		},
@@ -157,7 +215,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/sink_output_json')]",
+			"name": "[concat(parameters('factoryName'), '/source_employee_salary')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -169,15 +227,63 @@
 					"name": "dataflow"
 				},
 				"annotations": [],
-				"type": "Json",
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "employee_salary.csv",
+						"folderPath": "input",
+						"container": "dataflow"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "empid",
+						"type": "String"
+					},
+					{
+						"name": "empName",
+						"type": "String"
+					},
+					{
+						"name": "salary",
+						"type": "String"
+					},
+					{
+						"name": "dept",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sink_output_parquet')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorageLS",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "dataflow"
+				},
+				"annotations": [],
+				"type": "Parquet",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"folderPath": "output",
 						"container": "dataflow"
-					}
+					},
+					"compressionCodec": "snappy"
 				},
-				"schema": {}
+				"schema": []
 			},
 			"dependsOn": []
 		},
@@ -436,57 +542,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/get_metadata')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Get Metadata1",
-						"type": "GetMetadata",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "happy",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"fieldList": [
-								"columnCount",
-								"itemName",
-								"itemType",
-								"lastModified",
-								"size"
-							],
-							"storeSettings": {
-								"type": "AzureBlobStorageReadSettings",
-								"enablePartitionDiscovery": false
-							},
-							"formatSettings": {
-								"type": "DelimitedTextReadSettings"
-							}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"folder": {
-					"name": "Control Flow Activities"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/for_each')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -581,6 +636,60 @@
 				},
 				"annotations": []
 			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/source_loop_json')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/get_metadata')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Get Metadata1",
+						"type": "GetMetadata",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "happy",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"columnCount",
+								"itemName",
+								"itemType",
+								"lastModified",
+								"size"
+							],
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "DelimitedTextReadSettings"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Control Flow Activities"
+				},
+				"annotations": []
+			},
 			"dependsOn": []
 		},
 		{
@@ -654,7 +763,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dataflow_inner_join')]",
+			"name": "[concat(parameters('factoryName'), '/dataflow_column_pattern')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -663,17 +772,10 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "source_employee",
+								"referenceName": "source_sales_data",
 								"type": "DatasetReference"
 							},
-							"name": "employee"
-						},
-						{
-							"dataset": {
-								"referenceName": "source_department",
-								"type": "DatasetReference"
-							},
-							"name": "department"
+							"name": "sales"
 						}
 					],
 					"sinks": [
@@ -687,34 +789,31 @@
 					],
 					"transformations": [
 						{
-							"name": "join1"
+							"name": "colPattern"
 						}
 					],
 					"scriptLines": [
 						"source(output(",
-						"          empID as string,",
-						"          name as string,",
-						"          country as string,",
-						"          deptID as string",
+						"          id as string,",
+						"          SalePersonFName as string,",
+						"          SalePersonLName as string,",
+						"          ProductName as string,",
+						"          ItemsSold as string,",
+						"          SoldPrice as string,",
+						"          SoldDate as string,",
+						"          City as string,",
+						"          State as string,",
+						"          Country as string,",
+						"          Region as string",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> employee",
-						"source(output(",
-						"          deptID as string,",
-						"          deptName as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
+						"     inferDriftedColumnTypes: true,",
+						"     ignoreNoFilesFound: false) ~> sales",
+						"sales derive(each(match(type=='string'), concat($$, '_clean') = trim($$, '.'))) ~> colPattern",
+						"colPattern sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> department",
-						"employee, department join(employee@deptID == department@deptID,",
-						"     joinType:'inner',",
-						"     matchType:'exact',",
-						"     ignoreSpaces: false,",
-						"     broadcast: 'auto')~> join1",
-						"join1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     partitionFileNames:['dataflow_output.csv'],",
+						"     partitionFileNames:['column_pattern.csv'],",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
 						"     partitionBy('hash', 1)) ~> sink1"
@@ -722,56 +821,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/source_department')]",
-				"[concat(variables('factoryId'), '/datasets/sink_output_csv')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dataflow_schema_drift')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "source_employee",
-								"type": "DatasetReference"
-							},
-							"name": "employee"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "sink_output_csv",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [],
-					"scriptLines": [
-						"source(output(",
-						"          empID as string,",
-						"          name as string,",
-						"          country as string,",
-						"          deptID as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     inferDriftedColumnTypes: true,",
-						"     ignoreNoFilesFound: false) ~> employee",
-						"employee sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> sink1"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/sink_output_csv')]"
+				"[concat(variables('factoryId'), '/datasets/source_sales_data')]"
 			]
 		},
 		{
@@ -857,7 +907,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dataflow_column_pattern')]",
+			"name": "[concat(parameters('factoryName'), '/dataflow_flowlet_reuse')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -866,16 +916,16 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "source_sales_data",
+								"referenceName": "source_employee",
 								"type": "DatasetReference"
 							},
-							"name": "sales"
+							"name": "employee"
 						}
 					],
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "sink_output_csv",
+								"referenceName": "sink_output_json",
 								"type": "DatasetReference"
 							},
 							"name": "sink1"
@@ -883,31 +933,34 @@
 					],
 					"transformations": [
 						{
-							"name": "colPattern"
+							"name": "flowlet1",
+							"flowlet": {
+								"referenceName": "employee_flowlet",
+								"type": "DataFlowReference",
+								"parameters": {}
+							}
 						}
 					],
 					"scriptLines": [
 						"source(output(",
-						"          id as string,",
-						"          SalePersonFName as string,",
-						"          SalePersonLName as string,",
-						"          ProductName as string,",
-						"          ItemsSold as string,",
-						"          SoldPrice as string,",
-						"          SoldDate as string,",
-						"          City as string,",
-						"          State as string,",
-						"          Country as string,",
-						"          Region as string",
+						"          empID as string,",
+						"          name as string,",
+						"          country as string,",
+						"          deptID as string",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     inferDriftedColumnTypes: true,",
-						"     ignoreNoFilesFound: false) ~> sales",
-						"sales derive(each(match(type=='string'), concat($$, '_clean') = trim($$, '.'))) ~> colPattern",
-						"colPattern sink(allowSchemaDrift: true,",
+						"     ignoreNoFilesFound: false) ~> employee",
+						"employee compose(mapColumn(",
+						"          empID,",
+						"          name,",
+						"          country,",
+						"          deptID",
+						"     ),",
+						"     composition: 'employee_flowlet') ~> flowlet1@(output1)",
+						"flowlet1@output1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     partitionFileNames:['column_pattern.csv'],",
+						"     partitionFileNames:['flowlet.json'],",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
 						"     partitionBy('hash', 1)) ~> sink1"
@@ -915,8 +968,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/source_sales_data')]",
-				"[concat(variables('factoryId'), '/datasets/sink_output_csv')]"
+				"[concat(variables('factoryId'), '/datasets/source_employee')]"
 			]
 		},
 		{
@@ -981,11 +1033,84 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/sink_output_csv')]"
+				"[concat(variables('factoryId'), '/datasets/source_employee')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dataflow_flowlet_reuse')]",
+			"name": "[concat(parameters('factoryName'), '/dataflow_inner_join')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "source_employee",
+								"type": "DatasetReference"
+							},
+							"name": "employee"
+						},
+						{
+							"dataset": {
+								"referenceName": "source_department",
+								"type": "DatasetReference"
+							},
+							"name": "department"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "sink_output_csv",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "join1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          empID as string,",
+						"          name as string,",
+						"          country as string,",
+						"          deptID as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> employee",
+						"source(output(",
+						"          deptID as string,",
+						"          deptName as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> department",
+						"employee, department join(employee@deptID == department@deptID,",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join1",
+						"join1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     partitionFileNames:['dataflow_output.csv'],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     partitionBy('hash', 1)) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/source_employee')]",
+				"[concat(variables('factoryId'), '/datasets/source_department')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow_schema_drift')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1003,22 +1128,13 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "sink_output_json",
+								"referenceName": "sink_output_csv",
 								"type": "DatasetReference"
 							},
 							"name": "sink1"
 						}
 					],
-					"transformations": [
-						{
-							"name": "flowlet1",
-							"flowlet": {
-								"referenceName": "employee_flowlet",
-								"type": "DataFlowReference",
-								"parameters": {}
-							}
-						}
-					],
+					"transformations": [],
 					"scriptLines": [
 						"source(output(",
 						"          empID as string,",
@@ -1028,25 +1144,17 @@
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
+						"     inferDriftedColumnTypes: true,",
 						"     ignoreNoFilesFound: false) ~> employee",
-						"employee compose(mapColumn(",
-						"          empID,",
-						"          name,",
-						"          country,",
-						"          deptID",
-						"     ),",
-						"     composition: 'employee_flowlet') ~> flowlet1@(output1)",
-						"flowlet1@output1 sink(allowSchemaDrift: true,",
+						"employee sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     partitionFileNames:['flowlet.json'],",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     partitionBy('hash', 1)) ~> sink1"
+						"     skipDuplicateMapOutputs: true) ~> sink1"
 					]
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/sink_output_json')]"
+				"[concat(variables('factoryId'), '/datasets/source_employee')]"
 			]
 		},
 		{
@@ -1104,7 +1212,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/sink_output_csv')]"
+				"[concat(variables('factoryId'), '/datasets/source_employee')]"
 			]
 		},
 		{
@@ -1117,7 +1225,7 @@
 					"sources": [
 						{
 							"name": "source_sales_data",
-							"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  source_sales_data",
+							"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source_sales_data",
 							"dataset": {
 								"referenceName": "source_sales_data",
 								"type": "DatasetReference"
@@ -1130,139 +1238,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/source_sales_data')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Storage Event Trigger Input')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "copy_source_input",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "BlobEventsTrigger",
-				"typeProperties": {
-					"blobPathBeginsWith": "/source-adf/blobs/input/trigger/",
-					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('Storage Event Trigger Input_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobCreated",
-						"Microsoft.Storage.BlobDeleted"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/copy_source_input')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/switch_case')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Switch1",
-						"type": "Switch",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"on": {
-								"value": "@pipeline().parameters.user_selection",
-								"type": "Expression"
-							},
-							"cases": [
-								{
-									"value": "Fail",
-									"activities": [
-										{
-											"name": "Execute Pipeline2",
-											"type": "ExecutePipeline",
-											"dependsOn": [],
-											"policy": {
-												"secureInput": false
-											},
-											"userProperties": [],
-											"typeProperties": {
-												"pipeline": {
-													"referenceName": "fail_activity",
-													"type": "PipelineReference"
-												},
-												"waitOnCompletion": true,
-												"parameters": {}
-											}
-										}
-									]
-								},
-								{
-									"value": "Meta",
-									"activities": [
-										{
-											"name": "Execute Pipeline3",
-											"type": "ExecutePipeline",
-											"dependsOn": [],
-											"policy": {
-												"secureInput": false
-											},
-											"userProperties": [],
-											"typeProperties": {
-												"pipeline": {
-													"referenceName": "get_metadata",
-													"type": "PipelineReference"
-												},
-												"waitOnCompletion": true,
-												"parameters": {}
-											}
-										}
-									]
-								}
-							],
-							"defaultActivities": [
-								{
-									"name": "Execute Pipeline1",
-									"type": "ExecutePipeline",
-									"dependsOn": [],
-									"policy": {
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"pipeline": {
-											"referenceName": "copy_happy",
-											"type": "PipelineReference"
-										},
-										"waitOnCompletion": true,
-										"parameters": {}
-									}
-								}
-							]
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"user_selection": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "Control Flow Activities"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/copy_happy')]",
-				"[concat(variables('factoryId'), '/pipelines/get_metadata')]"
 			]
 		}
 	]
