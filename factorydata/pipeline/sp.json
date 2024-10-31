@@ -15,7 +15,13 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "sp_trips_by_year"
+					"storedProcedureName": "[NYCTaxi].[sp_trips_by_year]",
+					"storedProcedureParameters": {
+						"@trip_year": {
+							"value": "2023",
+							"type": "Int16"
+						}
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureSQLDatabaseLS",
