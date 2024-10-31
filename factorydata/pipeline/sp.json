@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"storedProcedureName": "[NYCTaxi].[sp_trips_by_year]",
 					"storedProcedureParameters": {
-						"@trip_year": {
+						"trip_year": {
 							"value": "2023",
 							"type": "Int16"
 						}
