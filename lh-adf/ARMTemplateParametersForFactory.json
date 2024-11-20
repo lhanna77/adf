@@ -8,6 +8,24 @@
 		"AzureBlobStorageLS_connectionString": {
 			"value": ""
 		},
+		"AzureSQLDatabaseLS_password": {
+			"value": ""
+		},
+		"AzureDatabricksKeyVault_properties_typeProperties_existingClusterId": {
+			"value": "1112-164051-1wultymp"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://lh-dp-203-key-vault.vault.azure.net/"
+		},
+		"AzureSQLDatabaseLS_properties_typeProperties_server": {
+			"value": "lh-synapse-ws-ondemand.sql.azuresynapse.net"
+		},
+		"AzureSQLDatabaseLS_properties_typeProperties_database": {
+			"value": "demoDB"
+		},
+		"AzureSQLDatabaseLS_properties_typeProperties_userName": {
+			"value": "sqladminuser"
+		},
 		"Storage Event Trigger Input_properties_typeProperties_scope": {
 			"value": "/subscriptions/05174b2b-36c5-447e-a3b3-c8f02ccb85dc/resourceGroups/lh-adf-rg/providers/Microsoft.Storage/storageAccounts/lhadfsa"
 		}
