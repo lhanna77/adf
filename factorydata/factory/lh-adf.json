@@ -2,7 +2,9 @@
 	"name": "lh-adf",
 	"properties": {
 		"globalConfigurations": {
-			"PipelineBillingEnabled": "true"
+			"PipelineBillingEnabled": "true",
+			"factoryStagingLSReferenceName": "AzureBlobStorageLS",
+			"factoryStagingLSType": "LinkedServiceReference"
 		}
 	},
 	"location": "uksouth"
