@@ -1,0 +1,9 @@
+{
+	"name": "lh-adf",
+	"properties": {
+		"globalConfigurations": {
+			"PipelineBillingEnabled": "true"
+		}
+	},
+	"location": "uksouth"
+}
