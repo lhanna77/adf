@@ -28,9 +28,96 @@
 						"type": "AzureSqlSink",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['MRData']['xmlns']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['MRData']['series']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['MRData']['url']"
+								},
+								"sink": {
+									"name": "url",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['MRData']['limit']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['MRData']['offset']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['MRData']['total']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['MRData']['DriverTable']['Drivers'][0]['driverId']"
+								},
+								"sink": {
+									"name": "driverId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['MRData']['DriverTable']['Drivers'][0]['url']"
+								},
+								"sink": {
+									"name": "url",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['MRData']['DriverTable']['Drivers'][0]['givenName']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['MRData']['DriverTable']['Drivers'][0]['familyName']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['MRData']['DriverTable']['Drivers'][0]['dateOfBirth']"
+								},
+								"sink": {
+									"name": "dateOfBirth",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"path": "$['MRData']['DriverTable']['Drivers'][0]['nationality']"
+								},
+								"sink": {
+									"name": "nationality",
+									"type": "String"
+								}
+							}
+						],
+						"collectionReference": ""
+					}
 				},
 				"inputs": [
 					{
