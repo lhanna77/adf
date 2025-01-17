@@ -1,0 +1,17 @@
+{
+	"name": "AzureSqlDatabaselhanna12",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "lh-azure-server.database.windows.net",
+			"database": "lh-formula1-db",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "lhanna12",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDRCNkJBNDRBLTI5QzMtNEEyMS05Q0MzLTIyNTE0QkQ0OUNCMV9iOTRkYzAwYy1kYzk2LTQ0MWMtOTZhZi0zYTBjMDlmNTI3N2IiDQp9"
+		}
+	}
+}
