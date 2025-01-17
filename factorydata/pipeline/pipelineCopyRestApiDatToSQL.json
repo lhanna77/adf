@@ -37,40 +37,6 @@
 						"mappings": [
 							{
 								"source": {
-									"path": "$['MRData']['xmlns']"
-								}
-							},
-							{
-								"source": {
-									"path": "$['MRData']['series']"
-								}
-							},
-							{
-								"source": {
-									"path": "$['MRData']['url']"
-								},
-								"sink": {
-									"name": "url",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['MRData']['limit']"
-								}
-							},
-							{
-								"source": {
-									"path": "$['MRData']['offset']"
-								}
-							},
-							{
-								"source": {
-									"path": "$['MRData']['total']"
-								}
-							},
-							{
-								"source": {
 									"path": "$['MRData']['DriverTable']['Drivers'][0]['driverId']"
 								},
 								"sink": {
@@ -85,16 +51,6 @@
 								"sink": {
 									"name": "url",
 									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['MRData']['DriverTable']['Drivers'][0]['givenName']"
-								}
-							},
-							{
-								"source": {
-									"path": "$['MRData']['DriverTable']['Drivers'][0]['familyName']"
 								}
 							},
 							{
