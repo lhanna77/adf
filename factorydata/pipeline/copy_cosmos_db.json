@@ -22,7 +22,8 @@
 					"sink": {
 						"type": "DelimitedTextSink",
 						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
+							"type": "AzureBlobStorageWriteSettings",
+							"copyBehavior": "FlattenHierarchy"
 						},
 						"formatSettings": {
 							"type": "DelimitedTextWriteSettings",
@@ -85,11 +86,8 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "sink_cities",
-						"type": "DatasetReference",
-						"parameters": {
-							"output_folder": "happy"
-						}
+						"referenceName": "sink_cosnos_sales",
+						"type": "DatasetReference"
 					}
 				]
 			}

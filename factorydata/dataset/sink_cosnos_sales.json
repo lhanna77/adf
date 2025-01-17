@@ -1,0 +1,56 @@
+{
+	"name": "sink_cosnos_sales",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorageLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "cosmos",
+				"container": "sink-adf"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": false,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "S.No",
+				"type": "String"
+			},
+			{
+				"name": "Confederation",
+				"type": "String"
+			},
+			{
+				"name": "Stadium",
+				"type": "String"
+			},
+			{
+				"name": "City",
+				"type": "String"
+			},
+			{
+				"name": "HomeTeams",
+				"type": "String"
+			},
+			{
+				"name": "Capacity",
+				"type": "String"
+			},
+			{
+				"name": "Country",
+				"type": "String"
+			},
+			{
+				"name": "IOC",
+				"type": "String"
+			}
+		]
+	}
+}
