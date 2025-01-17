@@ -1,0 +1,45 @@
+{
+	"name": "source_CosmosDbNoSqlSales",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "CosmosDbNoSql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "CosmosDbSqlApiCollection",
+		"schema": {
+			"type": "object",
+			"properties": {
+				"orderdate": {
+					"type": "string"
+				},
+				"customerid": {
+					"type": "integer"
+				},
+				"customerdetails": {
+					"type": "object",
+					"properties": {
+						"customername": {
+							"type": "string"
+						},
+						"customeremail": {
+							"type": "string"
+						}
+					}
+				},
+				"product": {
+					"type": "string"
+				},
+				"quantity": {
+					"type": "integer"
+				},
+				"price": {
+					"type": "number"
+				}
+			}
+		},
+		"typeProperties": {
+			"collectionName": "Sales"
+		}
+	}
+}
