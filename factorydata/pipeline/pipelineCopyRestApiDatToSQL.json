@@ -41,7 +41,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "sink_AzureSqlTableEmp_copy1",
+						"referenceName": "sink_AzureSqlTablef1",
 						"type": "DatasetReference"
 					}
 				]

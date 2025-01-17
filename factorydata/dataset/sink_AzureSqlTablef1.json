@@ -1,5 +1,5 @@
 {
-	"name": "sink_AzureSqlTableEmp_copy1",
+	"name": "sink_AzureSqlTablef1",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSqlDatabaselhanna12",
@@ -21,6 +21,10 @@
 				"name": "LastName",
 				"type": "varchar"
 			}
-		]
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "f1"
+		}
 	}
 }
