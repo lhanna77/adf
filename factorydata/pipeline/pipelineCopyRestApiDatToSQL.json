@@ -72,7 +72,7 @@
 								}
 							}
 						],
-						"collectionReference": ""
+						"collectionReference": "$['MRData']['DriverTable']['Drivers']"
 					}
 				},
 				"inputs": [
