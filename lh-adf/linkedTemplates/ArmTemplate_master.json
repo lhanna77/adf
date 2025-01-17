@@ -63,6 +63,10 @@
 			"type": "string",
 			"defaultValue": "/subscriptions/05174b2b-36c5-447e-a3b3-c8f02ccb85dc/resourceGroups/lh-adf-rg/providers/Microsoft.Storage/storageAccounts/lhadfsa"
 		},
+		"RestServiceF1API_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://ergast.com/api/f1/drivers.json"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -122,6 +126,9 @@
 					},
 					"AzureSqlDatabaselhanna12_properties_typeProperties_userName": {
 						"value": "[parameters('AzureSqlDatabaselhanna12_properties_typeProperties_userName')]"
+					},
+					"RestServiceF1API_properties_typeProperties_url": {
+						"value": "[parameters('RestServiceF1API_properties_typeProperties_url')]"
 					}
 				}
 			},

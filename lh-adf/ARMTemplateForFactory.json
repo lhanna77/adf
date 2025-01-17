@@ -62,6 +62,10 @@
 		"Storage Event Trigger Input_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/05174b2b-36c5-447e-a3b3-c8f02ccb85dc/resourceGroups/lh-adf-rg/providers/Microsoft.Storage/storageAccounts/lhadfsa"
+		},
+		"RestServiceF1API_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://ergast.com/api/f1/drivers.json"
 		}
 	},
 	"variables": {
@@ -122,7 +126,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "AzureSqlTable1",
+								"referenceName": "sink_AzureSqlTableEmp",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -136,7 +140,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/source_Emp')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
+				"[concat(variables('factoryId'), '/datasets/sink_AzureSqlTableEmp')]"
 			]
 		},
 		{
@@ -1778,7 +1782,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"name": "[concat(parameters('factoryName'), '/sink_AzureSqlTableEmp')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -3172,6 +3176,179 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/source_sales_data')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipelineCopyRestApiDatToSQL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"paginationRules": {
+									"supportRFC5988": "true"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "[['driverId']"
+										},
+										"sink": {
+											"name": "driverId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['url']"
+										},
+										"sink": {
+											"name": "url",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['dateOfBirth']"
+										},
+										"sink": {
+											"name": "dateOfBirth",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"path": "[['nationality']"
+										},
+										"sink": {
+											"name": "nationality",
+											"type": "String"
+										}
+									}
+								],
+								"collectionReference": "$['MRData']['DriverTable']['Drivers']"
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "RestResourceF1API",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "sink_AzureSqlTablef1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/RestResourceF1API')]",
+				"[concat(variables('factoryId'), '/datasets/sink_AzureSqlTablef1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/RestServiceF1API')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('RestServiceF1API_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/RestResourceF1API')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RestServiceF1API",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/RestServiceF1API')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sink_AzureSqlTablef1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabaselhanna12",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "FirstName",
+						"type": "varchar"
+					},
+					{
+						"name": "LastName",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "f1_drivers"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabaselhanna12')]"
 			]
 		}
 	]
