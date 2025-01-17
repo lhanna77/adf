@@ -1,0 +1,17 @@
+{
+	"name": "CosmosDbNoSqlKeyVault",
+	"properties": {
+		"annotations": [],
+		"type": "CosmosDb",
+		"typeProperties": {
+			"connectionString": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVault1",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "lh-cosmos-db-acc"
+			}
+		}
+	}
+}
