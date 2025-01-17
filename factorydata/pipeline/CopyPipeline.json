@@ -49,7 +49,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "AzureSqlTable1",
+						"referenceName": "sink_AzureSqlTableEmp",
 						"type": "DatasetReference"
 					}
 				]

@@ -1,5 +1,5 @@
 {
-	"name": "AzureSqlTable1",
+	"name": "sink_AzureSqlTableEmp",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSqlDatabaselhanna12",
