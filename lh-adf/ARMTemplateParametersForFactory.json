@@ -11,6 +11,12 @@
 		"AzureSQLDatabaseLS_password": {
 			"value": ""
 		},
+		"AzureSqlDatabaselhanna12_password": {
+			"value": ""
+		},
+		"CosmosDbNoSql_connectionString": {
+			"value": ""
+		},
 		"AzureDatabricksKeyVault_properties_typeProperties_existingClusterId": {
 			"value": "1112-164051-1wultymp"
 		},
@@ -25,6 +31,18 @@
 		},
 		"AzureSQLDatabaseLS_properties_typeProperties_userName": {
 			"value": "sqladminuser"
+		},
+		"AzureSqlDatabaselhanna12_properties_typeProperties_server": {
+			"value": "lh-azure-server.database.windows.net"
+		},
+		"AzureSqlDatabaselhanna12_properties_typeProperties_database": {
+			"value": "lh-formula1-db"
+		},
+		"AzureSqlDatabaselhanna12_properties_typeProperties_userName": {
+			"value": "lhanna12"
+		},
+		"CosmosDbNoSqlKeyVault_properties_typeProperties_connectionString_secretName": {
+			"value": "lh-cosmos-db-acc"
 		},
 		"Storage Event Trigger Input_properties_typeProperties_scope": {
 			"value": "/subscriptions/05174b2b-36c5-447e-a3b3-c8f02ccb85dc/resourceGroups/lh-adf-rg/providers/Microsoft.Storage/storageAccounts/lhadfsa"
