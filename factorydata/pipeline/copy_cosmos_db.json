@@ -17,6 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "CosmosDbSqlApiSource",
+						"query": "SELECT * FROM c",
 						"preferredRegions": []
 					},
 					"sink": {
@@ -31,52 +32,7 @@
 							"fileExtension": ".txt"
 						}
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "Countries",
-									"type": "String"
-								},
-								"sink": {
-									"type": "String",
-									"ordinal": 1
-								}
-							},
-							{
-								"source": {
-									"name": "Happiness index, 2022",
-									"type": "Double"
-								},
-								"sink": {
-									"type": "String",
-									"ordinal": 2
-								}
-							},
-							{
-								"source": {
-									"name": "Global rank",
-									"type": "Int16"
-								},
-								"sink": {
-									"type": "String",
-									"ordinal": 3
-								}
-							},
-							{
-								"source": {
-									"name": "Available data",
-									"type": "String"
-								},
-								"sink": {
-									"type": "String",
-									"ordinal": 4
-								}
-							}
-						]
-					}
+					"enableStaging": false
 				},
 				"inputs": [
 					{
