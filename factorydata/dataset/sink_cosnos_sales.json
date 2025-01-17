@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "sales.csv",
 				"folderPath": "cosmos",
 				"container": "sink-adf"
 			},
