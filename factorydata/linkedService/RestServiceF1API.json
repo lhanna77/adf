@@ -4,7 +4,7 @@
 		"annotations": [],
 		"type": "RestService",
 		"typeProperties": {
-			"url": "http://ergast.com/api/f1/current/last/results",
+			"url": "http://ergast.com/api/f1/drivers.json?callback=myParser",
 			"enableServerCertificateValidation": true,
 			"authenticationType": "Anonymous"
 		}
