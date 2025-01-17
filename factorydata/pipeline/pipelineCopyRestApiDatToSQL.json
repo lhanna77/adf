@@ -37,7 +37,7 @@
 						"mappings": [
 							{
 								"source": {
-									"path": "$['MRData']['DriverTable']['Drivers'][0]['driverId']"
+									"path": "['driverId']"
 								},
 								"sink": {
 									"name": "driverId",
@@ -46,7 +46,7 @@
 							},
 							{
 								"source": {
-									"path": "$['MRData']['DriverTable']['Drivers'][0]['url']"
+									"path": "['url']"
 								},
 								"sink": {
 									"name": "url",
@@ -55,7 +55,7 @@
 							},
 							{
 								"source": {
-									"path": "$['MRData']['DriverTable']['Drivers'][0]['dateOfBirth']"
+									"path": "['dateOfBirth']"
 								},
 								"sink": {
 									"name": "dateOfBirth",
@@ -64,7 +64,7 @@
 							},
 							{
 								"source": {
-									"path": "$['MRData']['DriverTable']['Drivers'][0]['nationality']"
+									"path": "['nationality']"
 								},
 								"sink": {
 									"name": "nationality",
