@@ -99,6 +99,63 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "ForEach sales",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Filter sales",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Filter sales').output.Value",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ForEach customer",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Filter customer",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Filter customer').output.output.Value",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ForEach product",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Filter products",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Filter products').output.output.Value",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"annotations": []
