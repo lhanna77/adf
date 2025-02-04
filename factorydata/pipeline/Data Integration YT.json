@@ -192,7 +192,7 @@
 					},
 					"activities": [
 						{
-							"name": "Copy data of sales",
+							"name": "Copy data of customers",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -218,7 +218,8 @@
 								"sink": {
 									"type": "AzureSqlSink",
 									"writeBehavior": "insert",
-									"sqlWriterUseTableLock": false
+									"sqlWriterUseTableLock": false,
+									"disableMetricsCollection": false
 								},
 								"enableStaging": false,
 								"translator": {
@@ -233,12 +234,18 @@
 							"inputs": [
 								{
 									"referenceName": "source_csv_multiple_sales",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"CustomerFileNames": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "sink_AzureSqlTablesProduct",
+									"referenceName": "sink_AzureSqlTableCustomer",
 									"type": "DatasetReference"
 								}
 							]
