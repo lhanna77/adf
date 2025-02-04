@@ -194,7 +194,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Filter customer').output.output.Value",
+						"value": "@activity('Filter customer').output.Value",
 						"type": "Expression"
 					},
 					"activities": [
@@ -274,7 +274,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Filter products').output.output.Value",
+						"value": "@activity('Filter products').output.Value",
 						"type": "Expression"
 					},
 					"activities": [
