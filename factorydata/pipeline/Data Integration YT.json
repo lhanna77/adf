@@ -332,7 +332,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "sink_AzureSqlTableCustomers",
+									"referenceName": "sink_AzureSqlTablesProducts",
 									"type": "DatasetReference"
 								}
 							]
