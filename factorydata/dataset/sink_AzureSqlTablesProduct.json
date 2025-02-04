@@ -1,0 +1,35 @@
+{
+	"name": "sink_AzureSqlTablesProduct",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabaselhanna12",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "product_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "product_name",
+				"type": "varchar"
+			},
+			{
+				"name": "category",
+				"type": "varchar"
+			},
+			{
+				"name": "price",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "product"
+		}
+	}
+}
