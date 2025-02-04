@@ -135,10 +135,29 @@
 					"items": {
 						"value": "@activity('Filter customer').output.output.Value",
 						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ForEach product",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Filter products",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Filter products').output.output.Value",
+						"type": "Expression"
 					},
 					"activities": [
 						{
-							"name": "Copy data of customers",
+							"name": "Copy data of products",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -179,10 +198,10 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "source_csv_multiple_sales",
+									"referenceName": "source_AzureSqlTablesProducts",
 									"type": "DatasetReference",
 									"parameters": {
-										"CustomerFileNames": {
+										"ProductsFileNames": {
 											"value": "@item().name",
 											"type": "Expression"
 										}
@@ -197,25 +216,6 @@
 							]
 						}
 					]
-				}
-			},
-			{
-				"name": "ForEach product",
-				"type": "ForEach",
-				"dependsOn": [
-					{
-						"activity": "Filter products",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"items": {
-						"value": "@activity('Filter products').output.output.Value",
-						"type": "Expression"
-					}
 				}
 			}
 		],
