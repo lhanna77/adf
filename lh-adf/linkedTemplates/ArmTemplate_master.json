@@ -59,13 +59,13 @@
 			"type": "string",
 			"defaultValue": "lh-cosmos-db-acc"
 		},
-		"Storage Event Trigger Input_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/05174b2b-36c5-447e-a3b3-c8f02ccb85dc/resourceGroups/lh-adf-rg/providers/Microsoft.Storage/storageAccounts/lhadfsa"
-		},
 		"RestServiceF1API_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://ergast.com/api/f1/drivers.json"
+		},
+		"Storage Event Trigger Input_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/05174b2b-36c5-447e-a3b3-c8f02ccb85dc/resourceGroups/lh-adf-rg/providers/Microsoft.Storage/storageAccounts/lhadfsa"
 		},
 		"containerUri": {
 			"type": "string",
