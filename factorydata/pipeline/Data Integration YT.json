@@ -160,18 +160,12 @@
 							"inputs": [
 								{
 									"referenceName": "source_csv_multiple_sales",
-									"type": "DatasetReference",
-									"parameters": {
-										"CustomerFileNames": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
-									}
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "sink_AzureSqlTableCustomer",
+									"referenceName": "sink_AzureSqlTablesSales",
 									"type": "DatasetReference"
 								}
 							]

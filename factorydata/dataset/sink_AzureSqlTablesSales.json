@@ -1,0 +1,31 @@
+{
+	"name": "sink_AzureSqlTablesSales",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabaselhanna12",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "sales_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "region",
+				"type": "varchar"
+			},
+			{
+				"name": "quantity",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "sales"
+		}
+	}
+}
